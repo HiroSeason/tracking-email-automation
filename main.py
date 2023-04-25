@@ -280,20 +280,20 @@ def query_data_and_send_emails(templates_values, emails_values,rep):
     return f'''{rep} New replies and {email_sent} Emails Sent. {errors} Errors'''
 
 def read_root():
-    if str(datetime.now())[11:16] in ["13:54","13:55","14:03","14:04","14:05","14:09","14:10","14:12","14:13","14:14","14:21","14:22"]:
-        print("Welcome to Cold E-mail Automation!")
-        ret = update_stats()
-        ret = ret.split("#")
+    #if str(datetime.now())[11:16] in ["13:54","13:55","14:03","14:04","14:05","14:09","14:10","14:12","14:13","14:14","14:21","14:22"]:
+    print("Welcome to Cold E-mail Automation!")
+    ret = update_stats()
+    ret = ret.split("#")
 
-        gc = gspread.service_account(filename=sheet)
-        emails = gc.open("Emails").sheet1
-        emails_values = emails.get_all_values()
-        templates = gc.open("Emails").get_worksheet(1)
-        templates_values = templates.get_all_values()
+    gc = gspread.service_account(filename=sheet)
+    emails = gc.open("Emails").sheet1
+    emails_values = emails.get_all_values()
+    templates = gc.open("Emails").get_worksheet(1)
+    templates_values = templates.get_all_values()
 
-        result = query_data_and_send_emails(templates_values, emails_values,int(ret[0]))
-        statsupdate(result, emails_values,0)
-        update(emails, emails_values)
-        return ret[1] + " New opens, " + result
-    else:
-        return "PING"
+    result = query_data_and_send_emails(templates_values, emails_values,int(ret[0]))
+    statsupdate(result, emails_values,0)
+    update(emails, emails_values)
+    return ret[1] + " New opens, " + result
+    #else:
+        #return "PING"
